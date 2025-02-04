@@ -1,0 +1,15 @@
+.recipes-list {
+  max-width: 1890px;
+  margin: 0 15px;
+  padding: 0 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  // width: 100%;
+  // background-color: rgb(67, 69, 83);
+  &__recipe {
+    flex-basis: 20%;
+  }
+}

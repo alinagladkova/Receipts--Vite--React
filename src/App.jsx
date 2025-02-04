@@ -1,11 +1,25 @@
-import ReceiptsList from "./components/ReceiptsList/ReceiptsList";
+import { useEffect, useState } from "react";
+import RecipesList from "./components/RecipesList/RecipesList";
+import Header from "./components/Header/Header";
 
 export default function App() {
-  return <ReceiptsList />;
+  const [recipes, setRecipes] = useState(null);
+
+  useEffect(() => {
+    fetch("https://dummyjson.com/recipes")
+      .then((res) => res.json())
+      .then((data) => setRecipes(data.recipes));
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <RecipesList recipes={recipes} />;
+    </>
+  );
 }
 
-// взять рецепты из api по 4
-// api вызывается в app
 // отверстать
 // усложнить?
 // компонент tabs
+// разобраться с лого

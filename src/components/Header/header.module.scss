@@ -1,0 +1,15 @@
+.header {
+  width: 100%;
+  padding: 15px 0;
+  background-color: rgb(67, 69, 83);
+  margin-bottom: 30px;
+  &__logo {
+    cursor: pointer;
+    max-width: 50px;
+    margin: 0 auto;
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}

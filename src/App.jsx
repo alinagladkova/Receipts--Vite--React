@@ -14,7 +14,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <RecipesList recipes={recipes} />;
+      <RecipesList recipes={recipes} />
     </>
   );
 }

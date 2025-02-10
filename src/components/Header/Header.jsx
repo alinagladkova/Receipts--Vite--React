@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header className={cn(styles.header)}>
       <div className={cn(styles[`header__logo`])}>
-        <img src="../../img/logo.png" alt="img" />
+        <img src="../../img/logo2.png" alt="img" />
       </div>
     </header>
   );

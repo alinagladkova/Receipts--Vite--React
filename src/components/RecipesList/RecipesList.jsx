@@ -3,8 +3,6 @@ import cn from "classnames";
 import styles from "./recipesList.module.scss";
 
 export default function RecipesList({ recipes }) {
-  console.log(recipes);
-
   return (
     <div className={cn(styles[`recipes-list`])}>
       {recipes &&

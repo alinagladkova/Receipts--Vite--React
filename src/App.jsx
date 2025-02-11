@@ -14,7 +14,9 @@ export default function App() {
   return (
     <>
       <Header />
-      <RecipesList recipes={recipes} />
+      <div className="container">
+        <RecipesList recipes={recipes} />
+      </div>
     </>
   );
 }

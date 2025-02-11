@@ -1,12 +1,12 @@
 .recipes-list {
-  max-width: 1890px;
   margin: 0 15px;
   padding: 0 15px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   gap: 10px;
+
   &__recipe {
     flex-basis: 20%;
     width: 100%;

@@ -5,6 +5,9 @@
     border-top-right-radius: 10px;
   }
   &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin: 15px;
   }
   &__title {
@@ -16,7 +19,7 @@
   }
   &__tabs-control {
     display: flex;
-    justify-content: space-between;
+    gap: 5px;
     align-items: flex-start;
     margin: 15px auto;
   }

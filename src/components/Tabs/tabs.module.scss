@@ -1,0 +1,9 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  &__control {
+    display: flex;
+    gap: 3px;
+  }
+}

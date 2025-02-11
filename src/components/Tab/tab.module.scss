@@ -1,9 +1,10 @@
 .tab {
-  display: none;
-  background-color: rgb(203, 207, 240);
-}
-
-.tab--active {
-  display: inline-block;
-  width: 100%;
+  cursor: pointer;
+  color: gray;
+  background-color: rgb(67, 69, 83);
+  border-radius: 5px;
+  padding: 5px 8px;
+  &--active {
+    color: #fff;
+  }
 }

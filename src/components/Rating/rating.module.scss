@@ -1,0 +1,8 @@
+.rating {
+  display: flex;
+  justify-content: center;
+  &__star {
+    color: rgb(255, 166, 0);
+    font-size: 20px;
+  }
+}

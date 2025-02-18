@@ -2,8 +2,21 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+
   &__control {
     display: flex;
     gap: 3px;
+  }
+
+  &__control-item {
+    cursor: pointer;
+    color: gray;
+    background-color: rgb(67, 69, 83);
+    border-radius: 5px;
+    padding: 5px 8px;
+  }
+
+  &__control-item--active {
+    color: #fff;
   }
 }

@@ -7,6 +7,16 @@ import { IoMdStarHalf } from "react-icons/io";
 export default function Rating({ defaultRating, maxValue }) {
   console.log(defaultRating);
 
+  // 4
+  // 4.3
+  // 4.5
+  // 4.6
+  const generateStars = (rating) => {
+    const countStar = Math.trunc(rating);
+    const partStar = rating - countStar;
+    const arr = [...Array(countStar)].fill(<IoMdStar />);
+  };
+
   return (
     <div className={cn(styles.rating)}>
       {[...Array(maxValue)].map((star, i) => {

@@ -1,32 +1,26 @@
 import cn from "classnames";
 import styles from "./tabs.module.scss";
-import Tab from "../Tab/Tab";
-import TabContent from "../TabContent/TabContent";
-import { useState } from "react";
+import { useState, cloneElement } from "react";
 
-export default function Tabs({ tabsArray }) {
+export default function Tabs({ children }) {
   const [isActive, setIsActive] = useState(0);
+
+  const childrenModify = children.map((child, i) => {
+    return cloneElement(child, {
+      active: isActive === i,
+    });
+  });
 
   return (
     <div className={cn(styles.tabs)}>
       <div className={cn(styles[`tabs__control`])}>
-        {tabsArray.map((tab, i) => (
-          <Tab text={tab} active={isActive === i} handler={() => setIsActive(i)} key={tab} />
+        {children.map((el, i) => (
+          <span className={cn(styles[`tabs__control-item`], isActive === i ? styles[`tabs__control-item--active`] : "")} onClick={() => setIsActive(i)}>
+            {el.props.title}
+          </span>
         ))}
       </div>
-      <div className={cn(styles[`tabs__content`])}>
-        <TabContent text="hello" active={isActive === 0} />
-        <TabContent text="hello1" active={isActive === 1} />
-        <TabContent text="hello2" active={isActive === 2} />
-      </div>
+      <div className={cn(styles[`tabs__content`])}>{childrenModify}</div>
     </div>
   );
-}
-
-{
-  /* <span className={cn(styles[`recipe__difficulty`])}>{recipe.difficulty}</span>
-        <span className={cn(styles[`recipe__cuisine`])}>{recipe.cuisine}</span>
-        <span className={cn(styles[`recipe__servings`])}>{recipe.servings}</span>
-        <span className={cn(styles[`recipe__time`])}>{recipe.cookTimeMinutes}</span>
-        <span className={cn(styles[`recipe__calories`])}>{recipe.caloriesPerServing}</span> */
 }

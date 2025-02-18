@@ -1,10 +1,11 @@
 .tab {
-  cursor: pointer;
-  color: gray;
-  background-color: rgb(67, 69, 83);
-  border-radius: 5px;
-  padding: 5px 8px;
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+
   &--active {
-    color: #fff;
+    opacity: 1;
+    visibility: visible;
+    height: auto;
   }
 }

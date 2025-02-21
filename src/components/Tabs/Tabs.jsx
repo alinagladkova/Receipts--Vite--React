@@ -15,7 +15,7 @@ export default function Tabs({ children }) {
     <div className={cn(styles.tabs)}>
       <div className={cn(styles[`tabs__control`])}>
         {children.map((el, i) => (
-          <span className={cn(styles[`tabs__control-item`], isActive === i ? styles[`tabs__control-item--active`] : "")} onClick={() => setIsActive(i)}>
+          <span className={cn(styles[`tabs__control-item`], isActive === i ? styles[`tabs__control-item--active`] : "")} key={i} onClick={() => setIsActive(i)}>
             {el.props.title}
           </span>
         ))}
@@ -24,3 +24,9 @@ export default function Tabs({ children }) {
     </div>
   );
 }
+
+//23 требует unique key
+//чтоб можно было поставить на вкладку снаружи disabled
+//prop в tabs, который по дефолту ставит активный таб
+//дать возможность управлять tabs cнаружи (не заходя в него)
+// тэги

@@ -6,8 +6,6 @@ import Tabs from "../Tabs/Tabs";
 import Tab from "../Tab/Tab";
 
 export default function Recipe({ recipe }) {
-  // let tabsArray = ["description", "ingridients", "instructions"];
-
   return (
     <div className={cn(styles.recipe)}>
       <div className={cn(styles[`recipe__img-wrapper`])}>

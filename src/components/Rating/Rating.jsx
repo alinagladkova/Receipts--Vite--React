@@ -5,47 +5,19 @@ import { IoMdStar } from "react-icons/io";
 import { IoMdStarHalf } from "react-icons/io";
 
 export default function Rating({ defaultRating, maxValue }) {
-  console.log(defaultRating);
-
-  // 4
-  // 4.3
-  // 4.5
-  // 4.6
   const generateStars = (rating) => {
-    const countStar = Math.trunc(rating);
-    const partStar = rating - countStar;
-    const arr = [...Array(countStar)].fill(<IoMdStar />);
+    const fullStars = Math.trunc(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = maxValue - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <>
+        {[...Array(fullStars)].fill(<IoMdStar color="rgb(255, 166, 0)" />)}
+        {halfStar ? <IoMdStarHalf color="rgb(255, 166, 0)" /> : null}
+        {[...Array(emptyStars)].fill(<IoIosStarOutline color="rgb(255, 166, 0)" />)}
+      </>
+    );
   };
 
-  return (
-    <div className={cn(styles.rating)}>
-      {[...Array(maxValue)].map((star, i) => {
-        i += 1;
-
-        if (i < Math.floor(defaultRating)) {
-          return (
-            <div className={cn(styles[`rating__star`])} key={i}>
-              <IoMdStar />
-            </div>
-          ); // Полностью закрашенная звезда
-        } else if (i < Math.ceil(defaultRating)) {
-          return (
-            <div className={cn(styles[`rating__star`])} key={i}>
-              <IoMdStarHalf />
-            </div>
-          ); // Полузакрашенная звезда
-        } else {
-          return (
-            <div className={cn(styles[`rating__star`])} key={i}>
-              <IoIosStarOutline />
-            </div>
-          ); // Незакрашенная звезда
-        }
-      })}
-    </div>
-  );
-}
-{
-  /* <IoMdStar />; */
-  // <IoMdStarHalf />;
+  return <div className={cn(styles.rating)}>{generateStars(defaultRating)}</div>;
 }

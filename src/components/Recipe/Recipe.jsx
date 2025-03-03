@@ -14,10 +14,39 @@ export default function Recipe({ recipe }) {
       <div className={cn(styles[`recipe__info`])}>
         <h3 className={cn(styles[`recipe__title`])}>{recipe.name}</h3>
         <Rating defaultRating={recipe.rating} maxValue={5} />
-        <Tabs>
-          <Tab title="ingridients">{recipe.ingredients}</Tab>
-          <Tab title="instructions">{recipe.instructions}</Tab>
-          <Tab title="description">111</Tab>
+        <Tabs dafaultActive="instructions">
+          <Tab title="description">
+            <p className={cn(styles[`recipe__desc-item`])}>
+              <span className={cn(styles[`recipe__desc-title`])}>CookTime: </span>
+              {recipe.cookTimeMinutes} mins
+            </p>
+            <p className={cn(styles[`recipe__desc-item`])}>
+              <span className={cn(styles[`recipe__desc-title`])}>Servings: </span>
+              {recipe.servings}
+            </p>
+            <p className={cn(styles[`recipe__desc-item`])}>
+              <span className={cn(styles[`recipe__desc-title`])}>Difficulty: </span>
+              {recipe.difficulty}
+            </p>
+            <p className={cn(styles[`recipe__desc-item`])}>
+              <span className={cn(styles[`recipe__desc-title`])}>Cuisine: </span>
+              {recipe.cuisine}
+            </p>
+            <p className={cn(styles[`recipe__desc-item`])}>
+              <span className={cn(styles[`recipe__desc-title`])}>Calories per serving: </span>
+              {recipe.caloriesPerServing}
+            </p>
+          </Tab>
+          <Tab title="ingridients">
+            {recipe.ingredients.map((el) => (
+              <p>{el}</p>
+            ))}
+          </Tab>
+          <Tab title="instructions">
+            {recipe.instructions.map((el) => (
+              <span>{el}&nbsp;</span>
+            ))}
+          </Tab>
         </Tabs>
         <div className={cn(styles[`recipe__tags`])}>
           <Tag />

@@ -2,12 +2,14 @@ import cn from "classnames";
 import styles from "./tabs.module.scss";
 import { useState, cloneElement } from "react";
 
-export default function Tabs({ children }) {
-  const [isActive, setIsActive] = useState(0);
+export default function Tabs({ dafaultActive, children }) {
+  // const [isActive, setIsActive] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
   const childrenModify = children.map((child, i) => {
     return cloneElement(child, {
-      active: isActive === i,
+      // active: isActive === i,
+      active: dafaultActive === child.props.title,
     });
   });
 
@@ -15,7 +17,10 @@ export default function Tabs({ children }) {
     <div className={cn(styles.tabs)}>
       <div className={cn(styles[`tabs__control`])}>
         {children.map((el, i) => (
-          <span className={cn(styles[`tabs__control-item`], isActive === i ? styles[`tabs__control-item--active`] : "")} key={i} onClick={() => setIsActive(i)}>
+          // <span className={cn(styles[`tabs__control-item`], isActive === i ? styles[`tabs__control-item--active`] : "")} key={i} onClick={() => setIsActive(i)}>
+          //   {el.props.title}
+          // </span>
+          <span className={cn(styles[`tabs__control-item`], isActive ? styles[`tabs__control-item--active`] : "")} key={i} onClick={() => setIsActive(true)}>
             {el.props.title}
           </span>
         ))}
@@ -29,4 +34,4 @@ export default function Tabs({ children }) {
 //чтоб можно было поставить на вкладку снаружи disabled
 //prop в tabs, который по дефолту ставит активный таб
 //дать возможность управлять tabs cнаружи (не заходя в него)
-// тэги
+//тэги

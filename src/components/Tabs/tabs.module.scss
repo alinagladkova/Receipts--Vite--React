@@ -7,7 +7,14 @@
     display: flex;
     gap: 3px;
   }
-
+  &__content {
+    display: inline-block;
+    overflow-y: auto;
+    background-color: rgb(178, 183, 216);
+    border-radius: 5px;
+    padding: 10px 0;
+    height: 150px;
+  }
   &__control-item {
     cursor: pointer;
     color: gray;

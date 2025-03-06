@@ -2,14 +2,17 @@ import cn from "classnames";
 import styles from "./tabs.module.scss";
 import { useState, cloneElement } from "react";
 
-export default function Tabs({ dafaultActive, children }) {
-  // const [isActive, setIsActive] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+export default function Tabs({ defaultActive, children }) {
+  if (typeof defaultActive !== "number" || defaultActive < 0 || defaultActive > children) {
+    defaultActive = 0;
+  }
+
+  const [isActive, setIsActive] = useState(defaultActive ? defaultActive : 0);
 
   const childrenModify = children.map((child, i) => {
     return cloneElement(child, {
-      // active: isActive === i,
-      active: dafaultActive === child.props.title,
+      active: isActive === i,
+      key: i,
     });
   });
 
@@ -17,10 +20,11 @@ export default function Tabs({ dafaultActive, children }) {
     <div className={cn(styles.tabs)}>
       <div className={cn(styles[`tabs__control`])}>
         {children.map((el, i) => (
-          // <span className={cn(styles[`tabs__control-item`], isActive === i ? styles[`tabs__control-item--active`] : "")} key={i} onClick={() => setIsActive(i)}>
-          //   {el.props.title}
-          // </span>
-          <span className={cn(styles[`tabs__control-item`], isActive ? styles[`tabs__control-item--active`] : "")} key={i} onClick={() => setIsActive(true)}>
+          <span
+            className={cn(styles[`tabs__control-item`], isActive === i ? styles[`tabs__control-item--active`] : "")}
+            key={i}
+            onClick={() => !el.props.disabled && setIsActive(i)}
+          >
             {el.props.title}
           </span>
         ))}
@@ -30,8 +34,7 @@ export default function Tabs({ dafaultActive, children }) {
   );
 }
 
-//23 требует unique key
-//чтоб можно было поставить на вкладку снаружи disabled
-//prop в tabs, который по дефолту ставит активный таб
-//дать возможность управлять tabs cнаружи (не заходя в него)
+//чтоб можно было поставить на вкладку снаружи disabled +
+//prop в tabs, который по дефолту ставит активный таб +
+//дать возможность управлять tabs cнаружи (не заходя в него) +
 //тэги

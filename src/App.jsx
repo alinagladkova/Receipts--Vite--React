@@ -6,7 +6,7 @@ export default function App() {
   const [recipes, setRecipes] = useState(null);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/recipes")
+    fetch("https://dummyjson.com/recipes?limit=8")
       .then((res) => res.json())
       .then((data) => setRecipes(data.recipes));
   }, []);

@@ -5,10 +5,10 @@ import Rating from "../Rating/Rating";
 import Tabs from "../Tabs/Tabs";
 import Tab from "../Tab/Tab";
 
-export default function Recipe({ recipe }) {
+export default function Recipe({ recipe, handle }) {
   return (
     <div className={cn(styles.recipe)}>
-      <div className={cn(styles[`recipe__img-wrapper`])}>
+      <div className={cn(styles[`recipe__img-wrapper`])} onClick={() => handle(recipe.image)}>
         <img className={cn(styles[`recipe__img`])} src={recipe.image} alt="img" />
       </div>
       <div className={cn(styles[`recipe__info`])}>

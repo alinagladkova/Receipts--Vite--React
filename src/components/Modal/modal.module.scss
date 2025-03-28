@@ -1,0 +1,23 @@
+.modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    background-color: #5fd490;
+    padding: 20px;
+  }
+
+  &__close {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+  }
+}

@@ -1,15 +1,26 @@
 .recipes-list {
-  margin: 0 15px;
-  padding: 0 15px;
-  display: flex;
-  display: grid;
-  grid-template-columns: repeat(4, 309px);
-  gap: 10px;
-  margin-bottom: 15px;
+  &__wrapper {
+    margin: 0 15px;
+    padding: 0 15px;
+    display: flex;
+    flex-wrap: wrap;
+    // display: grid;
+    // grid-template-columns: repeat(4, 309px);
+    gap: 10px;
+    margin-bottom: 15px;
+  }
   &__recipe {
-    flex-basis: 20%;
-    width: 100%;
+    // flex-basis: 20%;
+    // width: 100%;
+    width: calc(100% / 4 - 10px);
     border-radius: 10px;
     background-color: rgb(222, 224, 243);
+  }
+  &__btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
   }
 }

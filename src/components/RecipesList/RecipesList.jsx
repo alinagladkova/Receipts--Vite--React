@@ -3,12 +3,14 @@ import cn from "classnames";
 import styles from "./recipesList.module.scss";
 import Modal from "../Modal/Modal";
 import { createPortal } from "react-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button/Button";
 
-export default function RecipesList({ recipes }) {
+export default function RecipesList({}) {
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [isActiveContent, setIsActiveContent] = useState(null);
+  const [recipes, setRecipes] = useState([]);
+  const [skip, setSkip] = useState(0);
 
   const handleOpenActiveModal = (image) => {
     setIsActiveModal(true);
@@ -18,6 +20,27 @@ export default function RecipesList({ recipes }) {
   const handleClose = () => {
     setIsActiveModal(false);
   };
+
+  const handleSetSkip = () => {
+    setSkip(skip + 8);
+    console.log("yes");
+  };
+
+  /* 
+  
+  1 сделать так чтобы при достижении финиша данных, handleSetSkip больше не вызывался
+  2 сделать подгрузку компонента рецепт на скелетоне (8 штук)
+  3 сделать скелетоны в момент загрузки "загрузить еще" -> написать лоадер(крутилку) и внедрить в кнопку
+  
+  */
+
+  useEffect(() => {
+    fetch(`https://dummyjson.com/recipes?limit=8&skip=${skip}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setRecipes([...recipes, ...data.recipes]);
+      });
+  }, [skip]);
 
   return (
     <div className={cn(styles[`recipes-list`])}>
@@ -30,7 +53,9 @@ export default function RecipesList({ recipes }) {
           ))}
       </div>
       <div className={cn(styles[`recipes-list__btn`])}>
-        <Button use="loadMore">Load more</Button>
+        <Button use="loadMore" handler={handleSetSkip}>
+          Load more ({recipes.length})
+        </Button>
       </div>
       {createPortal(
         <Modal isActive={isActiveModal} handleClose={handleClose}>

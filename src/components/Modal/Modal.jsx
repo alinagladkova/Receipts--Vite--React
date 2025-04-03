@@ -45,9 +45,3 @@ export default function Modal({ children, isActive, handleClose }) {
     )
   );
 }
-
-// открытие при клике на изображение +
-// overflow: hidden; для body, когда модальное окно открывается
-// картинка рецепта +
-// закрытие на esc и клик вне модалки +
-// закрытие на крестик +

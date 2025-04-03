@@ -1,9 +1,9 @@
 .recipe {
   position: relative;
   border-radius: 10px;
-  height: 580px;
+  height: 585px;
   &__img-wrapper {
-    max-width: 319px;
+    max-width: 325px;
   }
   &__img {
     width: 100%;
@@ -40,8 +40,7 @@
     align-items: flex-start;
     margin: 15px auto;
   }
-  &__tab {
-  }
+
   &__desc-title {
     font-weight: 600;
   }

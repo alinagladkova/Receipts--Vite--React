@@ -1,6 +1,6 @@
 import cn from "classnames";
 import styles from "./counterPlus.module.scss";
-import Button from "../Button/Button";
+import Button from "../../Button/Button";
 import { useContext } from "react";
 import { CounterContext } from "../Counter/Counter";
 

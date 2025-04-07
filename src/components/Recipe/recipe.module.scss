@@ -2,6 +2,7 @@
   position: relative;
   border-radius: 10px;
   height: 585px;
+
   &__img-wrapper {
     max-width: 325px;
   }
@@ -25,8 +26,7 @@
     white-space: nowrap;
     overflow: hidden;
   }
-  &__rating {
-  }
+
   &__tabs-control {
     display: flex;
     gap: 5px;
@@ -40,7 +40,11 @@
     align-items: flex-start;
     margin: 15px auto;
   }
-
+  &__btn {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+  }
   &__desc-title {
     font-weight: 600;
   }

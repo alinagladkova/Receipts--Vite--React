@@ -1,0 +1,9 @@
+.favorite-item {
+  margin: 15px;
+  &__title {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: rgb(178, 183, 216);
+  }
+}

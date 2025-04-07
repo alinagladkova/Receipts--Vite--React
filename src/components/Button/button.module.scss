@@ -13,5 +13,13 @@
   background-color: transparent;
 }
 
-.button--loadMore {
+.button--addFavorite {
+  background-color: transparent;
+  color: rgb(67, 69, 83);
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  svg {
+    width: 20px;
+  }
 }

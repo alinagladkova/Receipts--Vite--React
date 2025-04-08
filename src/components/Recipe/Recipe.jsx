@@ -5,25 +5,24 @@ import Rating from "../Rating/Rating";
 import Tabs from "../Tabs/Tabs";
 import Tab from "../Tab/Tab";
 import Button from "../Button/Button";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { MdOutlineFavorite } from "react-icons/md";
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { useState } from "react";
 
-export default function Recipe({ recipe, handle }) {
+export default function Recipe({ recipe, handleOpenActiveModal }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleAddToFavorite = () => {
-    setIsFavorite(true);
+    setIsFavorite((prev) => !prev);
   };
 
   return (
     <div className={cn(styles.recipe)}>
       <div className={cn(styles[`recipe__btn`])}>
-        <Button use="addFavorite" handler={handleAddToFavorite}>
+        <Button use="add-favorite" handler={handleAddToFavorite}>
           {!isFavorite ? <MdOutlineFavoriteBorder /> : <MdOutlineFavorite />}
         </Button>
       </div>
-      <div className={cn(styles[`recipe__img-wrapper`])} onClick={() => handle(recipe.image)}>
+      <div className={cn(styles[`recipe__img-wrapper`])} onClick={() => handleOpenActiveModal(recipe.image)}>
         <img className={cn(styles[`recipe__img`])} src={recipe.image} alt="img" />
       </div>
       <div className={cn(styles[`recipe__info`])}>
@@ -31,6 +30,7 @@ export default function Recipe({ recipe, handle }) {
         <Rating defaultRating={recipe.rating} maxValue={5} />
         <Tabs defaultActive={0}>
           <Tab title="description">
+            {/* {в отдельный компонент} */}
             <p className={cn(styles[`recipe__desc-item`])}>
               <span className={cn(styles[`recipe__desc-title`])}>CookTime: </span>
               {recipe.cookTimeMinutes} mins

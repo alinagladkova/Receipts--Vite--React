@@ -1,6 +1,6 @@
 .favorite-list {
-  margin: 0 15px;
-  padding: 0 15px;
+  position: relative;
+
   &__top {
     border-bottom: 1px solid gray;
     padding-bottom: 10px;
@@ -12,29 +12,31 @@
     font-weight: 600;
   }
   &__amount {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-left: 3px;
     width: 30px;
     height: 30px;
-    background-color: rgb(67, 69, 83);
-    border-radius: 50%;
-    span {
-      font-weight: normal;
-      color: #fff;
-    }
+    color: #fff;
+    font-weight: normal;
   }
   &__list {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     opacity: 0;
     visibility: hidden;
     height: 0;
     padding: 10px;
     border-bottom: 1px solid gray;
+    transition: opacity 0.3s;
+    background-color: #fff;
+    z-index: 10;
+
     &--active {
       opacity: 1;
       visibility: visible;
-      height: 200px;
+      height: auto;
     }
   }
 }

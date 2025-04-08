@@ -1,9 +1,11 @@
-.favorite-item {
-  margin: 15px;
+.favorite-list-item {
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: rgb(178, 183, 216);
   &__title {
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 50%;
-    background-color: rgb(178, 183, 216);
   }
 }

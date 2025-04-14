@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const recipesMaxRef = useRef(0);
@@ -29,13 +30,27 @@ export default function App() {
       });
   }, [skip]);
 
+  const handleToFavorite = (recipe) => {
+    !favoriteRecipes.includes(recipe)
+      ? setFavoriteRecipes((prev) => [...prev, recipe])
+      : setFavoriteRecipes((prev) => [...prev].filter((value) => value !== recipe));
+  };
+
   return (
     <>
       <Header />
       <div className="container">
-        <FavoriteList favoriteList={[]} />
-        <RecipesList recipes={recipes} recipesMaxRef={recipesMaxRef} handleSetSkip={handleSetSkip} isLoading={isLoading} />
+        <FavoriteList favoriteList={favoriteRecipes} />
+        <RecipesList recipes={recipes} recipesMaxRef={recipesMaxRef} handleSetSkip={handleSetSkip} isLoading={isLoading} handleToFavorite={handleToFavorite} />
       </div>
     </>
   );
 }
+
+/* 
+
+написат ькомпонент (овал) Classic Margherita Pizza X Classic Margherita Pizza X Classic Margherita Pizza X
+
+адаптив
+
+*/

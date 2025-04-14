@@ -1,10 +1,10 @@
 .recipe {
   position: relative;
   border-radius: 10px;
-  height: 585px;
+  height: 600px;
 
   &__img-wrapper {
-    max-width: 325px;
+    // max-width: 325px;
   }
   &__img {
     width: 100%;
@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin: 10px;
+    margin: 5px 10px;
   }
   &__title {
     text-align: center;
@@ -31,7 +31,7 @@
     display: flex;
     gap: 5px;
     align-items: flex-start;
-    margin: 15px auto;
+    margin: 10px auto;
   }
   &__tabs-wrapper {
     position: relative;
@@ -47,5 +47,12 @@
   }
   &__desc-title {
     font-weight: 600;
+  }
+  &__tags {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 3px 0;
+    font-size: 14px;
   }
 }

@@ -8,7 +8,7 @@ import Button from "../Button/Button";
 import Skeleton from "../Skeleton/Skeleton";
 import Loader from "../Loader/Loader";
 
-export default function RecipesList({ recipes, recipesMaxRef, handleSetSkip, isLoading }) {
+export default function RecipesList({ recipes, recipesMaxRef, handleSetSkip, isLoading, handleToFavorite }) {
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [isActiveContent, setIsActiveContent] = useState(null);
 
@@ -21,6 +21,10 @@ export default function RecipesList({ recipes, recipesMaxRef, handleSetSkip, isL
     setIsActiveModal(false);
   };
 
+  const handleAddFavorite = (recipe) => {
+    handleToFavorite(recipe);
+  };
+
   return (
     <div className={cn(styles[`recipes-list`])}>
       <div className={cn(styles[`recipes-list__wrapper`])}>
@@ -28,7 +32,7 @@ export default function RecipesList({ recipes, recipesMaxRef, handleSetSkip, isL
           ? [...new Array(10)].map((_, i) => <Skeleton key={i} />)
           : recipes.map((recipe) => (
               <div className={cn(styles[`recipes-list__recipe`])} key={recipe.id}>
-                <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} />
+                <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleAddFavorite={handleAddFavorite} />
               </div>
             ))}
       </div>
@@ -48,16 +52,3 @@ export default function RecipesList({ recipes, recipesMaxRef, handleSetSkip, isL
     </div>
   );
 }
-
-/* 
-
-на каждом рецепте сверху справа будет кнопка звездочка
-кликаем на звездочка и она красится +
-
-написать компонент лист избранного +
-
-написат ькомпонент (овал) Classic Margherita Pizza X Classic Margherita Pizza X Classic Margherita Pizza X
-
-перенести useEffect выше
-
-*/

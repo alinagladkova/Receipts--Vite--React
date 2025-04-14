@@ -6,6 +6,7 @@ import Circle from "../Circle/Circle";
 
 export default function FavoriteList({ favoriteList }) {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(favoriteList);
 
   const handleOpenFavorite = () => {
     setIsOpen((prev) => !prev);
@@ -22,8 +23,9 @@ export default function FavoriteList({ favoriteList }) {
         </h6>
       </div>
       <ul className={cn(styles[`favorite-list__list`], isOpen ? styles[`favorite-list__list--active`] : "")}>
-        <FavoriteListItem></FavoriteListItem>
-        <FavoriteListItem></FavoriteListItem>
+        {favoriteList.map((item) => (
+          <FavoriteListItem key={item.id}>{item.name}</FavoriteListItem>
+        ))}
       </ul>
     </div>
   );

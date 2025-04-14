@@ -8,17 +8,18 @@ import Button from "../Button/Button";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { useState } from "react";
 
-export default function Recipe({ recipe, handleOpenActiveModal }) {
+export default function Recipe({ recipe, handleOpenActiveModal, handleAddFavorite }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const handleAddToFavorite = () => {
+  const handleAddToFavorite = (recipe) => {
     setIsFavorite((prev) => !prev);
+    handleAddFavorite(recipe);
   };
 
   return (
     <div className={cn(styles.recipe)}>
       <div className={cn(styles[`recipe__btn`])}>
-        <Button use="add-favorite" handler={handleAddToFavorite}>
+        <Button use="add-favorite" handler={() => handleAddToFavorite(recipe)}>
           {!isFavorite ? <MdOutlineFavoriteBorder /> : <MdOutlineFavorite />}
         </Button>
       </div>
@@ -30,7 +31,6 @@ export default function Recipe({ recipe, handleOpenActiveModal }) {
         <Rating defaultRating={recipe.rating} maxValue={5} />
         <Tabs defaultActive={0}>
           <Tab title="description">
-            {/* {в отдельный компонент} */}
             <p className={cn(styles[`recipe__desc-item`])}>
               <span className={cn(styles[`recipe__desc-title`])}>CookTime: </span>
               {recipe.cookTimeMinutes} mins
@@ -51,6 +51,11 @@ export default function Recipe({ recipe, handleOpenActiveModal }) {
               <span className={cn(styles[`recipe__desc-title`])}>Calories per serving: </span>
               {recipe.caloriesPerServing}
             </p>
+            <div className={cn(styles[`recipe__tags`])}>
+              {recipe.tags.map((tag) => (
+                <Tag>{tag}</Tag>
+              ))}
+            </div>
           </Tab>
           <Tab title="ingridients" disabled>
             {recipe.ingredients.map((el, i) => (
@@ -63,9 +68,6 @@ export default function Recipe({ recipe, handleOpenActiveModal }) {
             ))}
           </Tab>
         </Tabs>
-        <div className={cn(styles[`recipe__tags`])}>
-          <Tag />
-        </div>
       </div>
     </div>
   );

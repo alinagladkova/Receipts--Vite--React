@@ -8,7 +8,7 @@ import Button from "../Button/Button";
 import Skeleton from "../Skeleton/Skeleton";
 import Loader from "../Loader/Loader";
 
-export default function RecipesList({ recipes, recipesMaxRef, handleSetSkip, isLoading, handleToFavorite }) {
+export default function RecipesList({ recipes, handleSetSkip, isLoading, handleToFavorite, hasMore }) {
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [isActiveContent, setIsActiveContent] = useState(null);
 
@@ -28,15 +28,14 @@ export default function RecipesList({ recipes, recipesMaxRef, handleSetSkip, isL
   return (
     <div className={cn(styles[`recipes-list`])}>
       <div className={cn(styles[`recipes-list__wrapper`])}>
-        {isLoading
-          ? [...new Array(10)].map((_, i) => <Skeleton key={i} />)
-          : recipes.map((recipe) => (
-              <div className={cn(styles[`recipes-list__recipe`])} key={recipe.id}>
-                <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleAddFavorite={handleAddFavorite} />
-              </div>
-            ))}
+        {recipes.map((recipe) => (
+          <div className={cn(styles[`recipes-list__recipe`])} key={recipe.id}>
+            <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleAddFavorite={handleAddFavorite} />
+          </div>
+        ))}
+        {isLoading && [...new Array(10)].map((_, i) => <Skeleton key={i} />)}
       </div>
-      {recipes.length < recipesMaxRef.current && (
+      {hasMore && (
         <div className={cn(styles[`recipes-list__btn`])}>
           <Button use="loadMore" handler={handleSetSkip}>
             Load more ({recipes.length}){isLoading && <Loader />}

@@ -53,7 +53,7 @@ export default function Recipe({ recipe, handleOpenActiveModal, handleAddFavorit
             </p>
             <div className={cn(styles[`recipe__tags`])}>
               {recipe.tags.map((tag) => (
-                <Tag>{tag}</Tag>
+                <Tag key={tag}>{tag}</Tag>
               ))}
             </div>
           </Tab>

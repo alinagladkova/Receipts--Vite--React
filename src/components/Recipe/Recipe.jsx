@@ -8,18 +8,11 @@ import Button from "../Button/Button";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { useState } from "react";
 
-export default function Recipe({ recipe, handleOpenActiveModal, handleAddFavorite }) {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const handleAddToFavorite = (recipe) => {
-    setIsFavorite((prev) => !prev);
-    handleAddFavorite(recipe);
-  };
-
+export default function Recipe({ recipe, handleOpenActiveModal, handleToFavorite, isFavorite }) {
   return (
     <div className={cn(styles.recipe)}>
       <div className={cn(styles[`recipe__btn`])}>
-        <Button use="add-favorite" handler={() => handleAddToFavorite(recipe)}>
+        <Button use="add-favorite" handler={() => handleToFavorite(recipe.id)}>
           {!isFavorite ? <MdOutlineFavoriteBorder /> : <MdOutlineFavorite />}
         </Button>
       </div>

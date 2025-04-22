@@ -8,7 +8,7 @@ import Button from "../Button/Button";
 import Skeleton from "../Skeleton/Skeleton";
 import Loader from "../Loader/Loader";
 
-export default function RecipesList({ recipes, handleSetSkip, isLoading, handleToFavorite, hasMore }) {
+export default function RecipesList({ recipes, favoriteRecipes, handleSetSkip, isLoading, handleToFavorite, hasMore }) {
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [isActiveContent, setIsActiveContent] = useState(null);
 
@@ -21,8 +21,8 @@ export default function RecipesList({ recipes, handleSetSkip, isLoading, handleT
     setIsActiveModal(false);
   };
 
-  const handleAddFavorite = (recipe) => {
-    handleToFavorite(recipe);
+  const isFavoriteRecipe = (recipe) => {
+    return favoriteRecipes.includes(recipe);
   };
 
   return (
@@ -30,7 +30,7 @@ export default function RecipesList({ recipes, handleSetSkip, isLoading, handleT
       <div className={cn(styles[`recipes-list__wrapper`])}>
         {recipes.map((recipe) => (
           <div className={cn(styles[`recipes-list__recipe`])} key={recipe.id}>
-            <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleAddFavorite={handleAddFavorite} />
+            <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleToFavorite={handleToFavorite} isFavorite={isFavoriteRecipe(recipe)} />
           </div>
         ))}
         {isLoading && [...new Array(10)].map((_, i) => <Skeleton key={i} />)}

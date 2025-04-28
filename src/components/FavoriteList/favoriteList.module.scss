@@ -1,14 +1,8 @@
 .favorite-list {
-  position: relative;
-
-  &__top {
-    border-bottom: 1px solid gray;
-    padding-bottom: 10px;
-  }
   &__title {
+    cursor: pointer;
     display: flex;
     align-items: center;
-    cursor: pointer;
     font-weight: 600;
   }
   &__amount {
@@ -27,6 +21,7 @@
     opacity: 0;
     visibility: hidden;
     height: 0;
+    margin-top: 11px;
     padding: 10px;
     border-bottom: 1px solid gray;
     transition: opacity 0.3s;

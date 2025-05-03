@@ -37,7 +37,7 @@ export default function RecipesList({ recipes, favoriteRecipes, handleSetSkip, i
       </div>
       {hasMore && (
         <div className={cn(styles[`recipes-list__btn`])}>
-          <Button use="loadMore" handler={handleSetSkip}>
+          <Button use="primary" handler={handleSetSkip}>
             Load more ({recipes.length}){isLoading && <Loader />}
           </Button>
         </div>

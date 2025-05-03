@@ -8,3 +8,5 @@ export default function Button({ use, children, handler }) {
     </button>
   );
 }
+
+// а если нужны базовые стили для кнопки, то какой будет use?

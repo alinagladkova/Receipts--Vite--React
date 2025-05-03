@@ -3,7 +3,7 @@ import Header from "./components/Header/Header";
 import FavoriteList from "./components/FavoriteList/FavoriteList";
 import { useEffect, useRef, useState } from "react";
 import Filter from "./components/Filter/Filter";
-import BreadCrumbs from "./components/BreadCrumbs/BreadCrumbs";
+import Form from "./components/Form/Form";
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -11,7 +11,6 @@ export default function App() {
   const [skip, setSkip] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  // const [recipesTags, setRecipesTags] = useState([]);
   const recipesMaxRef = useRef(0);
 
   const handleSetSkip = () => {
@@ -33,14 +32,6 @@ export default function App() {
       recipesMaxRef.current = data.total;
       setRecipes([...recipes, ...data.recipes]);
       setHasMore(skip + data.recipes.length < data.total);
-
-      // setRecipesTags((prev) => {
-      //   recipes.reduce((acc, recipe) => {
-      //     return [...acc, ...recipe.tags];
-      //   }, "");
-      //   const tags = recipesTags.filter((tag, i, arr) => arr.indexOf(tag) === i);
-      //   return tags;
-      // });
     } catch (error) {
       console.error("Error fetching recipes:", error);
     } finally {
@@ -66,9 +57,15 @@ export default function App() {
 
   const getRecipesTags = () => {
     if (recipes.length > 0) {
-      const recipesTags = recipes.reduce((acc, recipe) => {
-        return [...acc, ...recipe.tags];
-      }, "");
+      const recipesTags = recipes
+        .reduce((acc, recipe) => {
+          return [...acc, ...recipe.tags];
+        }, [])
+        .reduce((acc, tag) => {
+          acc.push({ value: tag, label: tag });
+          return acc;
+        }, []);
+
       const tags = recipesTags.filter((tag, i, arr) => arr.indexOf(tag) === i);
       return tags;
     }
@@ -76,12 +73,13 @@ export default function App() {
 
   return (
     <>
+      <Form />
       <Header />
       <div className="container">
-        <BreadCrumbs>
+        <div className="control-panel">
           <FavoriteList favoriteRecipes={favoriteRecipes} handleToFavorite={handleToFavorite} />
           <Filter recipesTags={getRecipesTags()} />
-        </BreadCrumbs>
+        </div>
         <RecipesList
           recipes={recipes}
           favoriteRecipes={favoriteRecipes}
@@ -99,12 +97,17 @@ export default function App() {
 
 адаптив
 сделать прогрузку изображения (можно ли передать состояние isLoading ниже или нужно новое?)
-доделать фильтр по тэгам
+переделать фильтр по тэгам
 отображение ошибок
 самые просматриваемые
 поиск
-hoverы
-breadcrumbs открывать поочередно, а не все сразу
+control-panel открывать поочередно, а не все сразу
+добавить транзишены
+
+обернуть в форму, переделать выпадающим полотном
+хэндлером из формы получить данные и отфильтровать
+подобавлять разные типы в форму
+вспомнить класс FormData
 */
 
 /* ошибка ключа
@@ -127,6 +130,4 @@ setRecipes(prevRecipes => {
   );
   return [...prevRecipes, ...newRecipes];
 });
-
-
 */

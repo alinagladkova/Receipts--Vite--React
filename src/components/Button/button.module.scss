@@ -9,34 +9,17 @@
   color: #fff;
 }
 
+.button--primary {
+  &:hover {
+    color: rgb(67, 69, 83);
+    background-color: rgb(178, 183, 216);
+  }
+}
+
 .button--stealth {
   background-color: transparent;
   padding: 0;
-}
-
-.button--add-favorite {
-  background-color: transparent;
-  color: rgb(67, 69, 83);
-  background-color: #fff;
-  width: 40px;
-  height: 40px;
-  svg {
-    width: 20px;
-  }
-}
-
-.button--openFilter {
-  background-color: transparent;
-  color: rgb(67, 69, 83);
-  svg {
-    width: 20px;
-  }
-}
-
-.button--showOptions {
-  background-color: transparent;
-  color: rgb(67, 69, 83);
-  svg {
-    width: 20px;
+  &:hover {
+    margin-bottom: 5px;
   }
 }

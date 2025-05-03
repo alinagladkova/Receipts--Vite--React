@@ -6,14 +6,16 @@ import Tabs from "../Tabs/Tabs";
 import Tab from "../Tab/Tab";
 import Button from "../Button/Button";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
-import { useState } from "react";
+import { IconContext } from "react-icons";
 
 export default function Recipe({ recipe, handleOpenActiveModal, handleToFavorite, isFavorite }) {
   return (
     <div className={cn(styles.recipe)}>
       <div className={cn(styles[`recipe__btn`])}>
-        <Button use="add-favorite" handler={() => handleToFavorite(recipe.id)}>
-          {!isFavorite ? <MdOutlineFavoriteBorder /> : <MdOutlineFavorite />}
+        <Button use="stealth" handler={() => handleToFavorite(recipe.id)}>
+          <IconContext.Provider value={{ color: "rgb(67, 69, 83)", size: "25px" }}>
+            {!isFavorite ? <MdOutlineFavoriteBorder /> : <MdOutlineFavorite />}
+          </IconContext.Provider>
         </Button>
       </div>
       <div className={cn(styles[`recipe__img-wrapper`])} onClick={() => handleOpenActiveModal(recipe.image)}>

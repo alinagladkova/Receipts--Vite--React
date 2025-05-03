@@ -29,3 +29,12 @@ code {
   width: 100%;
   padding: 0 15px;
 }
+
+.control-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid gray;
+  padding-bottom: 10px;
+}

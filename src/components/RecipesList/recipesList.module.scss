@@ -20,4 +20,9 @@
   &__btn--hidden {
     display: none;
   }
+  &__error {
+    margin: 20px auto;
+    font-weight: 600;
+    font-size: 24px;
+  }
 }

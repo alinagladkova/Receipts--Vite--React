@@ -3,11 +3,12 @@ import Header from "./components/Header/Header";
 import FavoriteList from "./components/FavoriteList/FavoriteList";
 import { useEffect, useRef, useState } from "react";
 import Filter from "./components/Filter/Filter";
-import Form from "./components/Form/Form";
+// import { getRecipesTags } from "./utils/selectorData";
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState(null);
   const [skip, setSkip] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -55,33 +56,95 @@ export default function App() {
       : setFavoriteRecipes((prev) => prev.filter((recipe) => recipe !== findedRecipe));
   };
 
-  const getRecipesTags = () => {
-    if (recipes.length > 0) {
-      const recipesTags = recipes
-        .reduce((acc, recipe) => {
-          return [...acc, ...recipe.tags];
-        }, [])
-        .reduce((acc, tag) => {
-          acc.push({ value: tag, label: tag });
-          return acc;
-        }, []);
-
-      const tags = recipesTags.filter((tag, i, arr) => arr.indexOf(tag) === i);
-      return tags;
+  const getRecipesData = (data) => {
+    if (recipes.length < 0) {
+      return;
     }
+    // if (Array.isArray(data)) {}
+    //проверка для select, multi и slider
+    const recipesData = data
+      .filter((item, i, arr) => arr.indexOf(item) === i)
+      .map((item) => {
+        return { value: item, label: item };
+      });
+
+    return recipesData;
+  };
+
+  const getRecipesTags = () => {
+    const recipesTags = recipes.reduce((acc, recipe) => {
+      return [...acc, ...recipe.tags];
+    }, []);
+
+    const tags = getRecipesData(recipesTags);
+    return tags;
+  };
+
+  const getRecipesIngredients = () => {
+    const recipesIngredients = recipes.reduce((acc, recipe) => {
+      return [...acc, ...recipe.ingredients];
+    }, []);
+
+    const ingredients = getRecipesData(recipesIngredients);
+    return ingredients;
+  };
+
+  const getRecipesDifficulty = () => {
+    const recipesDifficulty = recipes.map((recipe) => recipe.difficulty);
+
+    const difficulty = getRecipesData(recipesDifficulty);
+    return difficulty;
+  };
+
+  const getRecipesMealType = () => {
+    const recipesMealType = recipes.map((recipe) => recipe.mealType);
+
+    const mealType = getRecipesData(recipesMealType);
+    return mealType;
+  };
+
+  const getRecipesCuisine = () => {
+    const recipesCuisine = recipes.map((recipe) => recipe.cuisine);
+
+    const cuisine = getRecipesData(recipesCuisine);
+    return cuisine;
+  };
+
+  const handleSelected = (selected) => {
+    //сюда должен прийти объект filterParams
+    // закинуть в состояние
+    if (selected.length === 0) {
+      return;
+    }
+
+    const selectedItems = selected.map((item) => item.value);
+    console.log(selectedItems);
+
+    const filtered = recipes.filter((recipe) => {
+      return selectedItems.every((item) => recipe.tags.includes(item));
+    });
+
+    setFilteredRecipes(filtered);
   };
 
   return (
     <>
-      <Form />
       <Header />
       <div className="container">
         <div className="control-panel">
           <FavoriteList favoriteRecipes={favoriteRecipes} handleToFavorite={handleToFavorite} />
-          <Filter recipesTags={getRecipesTags()} />
+          <Filter
+            tags={getRecipesTags()}
+            ingredients={getRecipesIngredients()}
+            difficulty={getRecipesDifficulty()}
+            mealType={getRecipesMealType()}
+            cuisine={getRecipesCuisine()}
+            handleSelected={handleSelected}
+          />
         </div>
         <RecipesList
           recipes={recipes}
+          filteredRecipes={filteredRecipes}
           favoriteRecipes={favoriteRecipes}
           handleSetSkip={handleSetSkip}
           isLoading={isLoading}
@@ -131,3 +194,24 @@ setRecipes(prevRecipes => {
   return [...prevRecipes, ...newRecipes];
 });
 */
+
+//поменять reduce на map +
+// дополнить фильтр
+
+// if (recipes.length > 0) {
+//   const recipesTags = recipes
+//     .reduce((acc, recipe) => {
+//       return [...acc, ...recipe.tags];
+//     }, [])
+//     .filter((tag, i, arr) => arr.indexOf(tag) === i)
+//     .map((tag) => {
+//       return { value: tag, label: tag };
+//     });
+//   // .reduce((acc, tag) => {
+//   //   acc.push({ value: tag, label: tag });
+//   //   return acc;
+//   // }, []);
+//   // const tags = recipesTags.filter((tag, i, arr) => arr.indexOf(tag) === i);
+//   // return tags;
+//   return recipesTags;
+// }

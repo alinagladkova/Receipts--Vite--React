@@ -8,9 +8,10 @@ import Button from "../Button/Button";
 import Skeleton from "../Skeleton/Skeleton";
 import Loader from "../Loader/Loader";
 
-export default function RecipesList({ recipes, favoriteRecipes, handleSetSkip, isLoading, handleToFavorite, hasMore }) {
+export default function RecipesList({ recipes, filteredRecipes, favoriteRecipes, handleSetSkip, isLoading, handleToFavorite, hasMore }) {
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [isActiveContent, setIsActiveContent] = useState(null);
+  // console.log(filteredRecipes); //не обновляется рендер, когда приходит новый filteredRecipes
 
   const handleOpenActiveModal = (image) => {
     setIsActiveModal(true);
@@ -28,11 +29,21 @@ export default function RecipesList({ recipes, favoriteRecipes, handleSetSkip, i
   return (
     <div className={cn(styles[`recipes-list`])}>
       <div className={cn(styles[`recipes-list__wrapper`])}>
-        {recipes.map((recipe) => (
-          <div className={cn(styles[`recipes-list__recipe`])} key={recipe.id}>
-            <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleToFavorite={handleToFavorite} isFavorite={isFavoriteRecipe(recipe)} />
-          </div>
-        ))}
+        {filteredRecipes === null ? (
+          recipes.map((recipe) => (
+            <div className={cn(styles[`recipes-list__recipe`])} key={recipe.id}>
+              <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleToFavorite={handleToFavorite} isFavorite={isFavoriteRecipe(recipe)} />
+            </div>
+          ))
+        ) : !filteredRecipes.length === 0 ? (
+          filteredRecipes.map((recipe) => (
+            <div className={cn(styles[`recipes-list__recipe`])} key={recipe.id}>
+              <Recipe recipe={recipe} handleOpenActiveModal={handleOpenActiveModal} handleToFavorite={handleToFavorite} isFavorite={isFavoriteRecipe(recipe)} />
+            </div>
+          ))
+        ) : (
+          <span className={cn(styles[`recipes-list__error`])}>There is no recipe with such tags.</span>
+        )}
         {isLoading && [...new Array(10)].map((_, i) => <Skeleton key={i} />)}
       </div>
       {hasMore && (
@@ -51,3 +62,16 @@ export default function RecipesList({ recipes, favoriteRecipes, handleSetSkip, i
     </div>
   );
 }
+
+// _getFilterValue(filterParams) {
+//   return (product) => {
+//     return Object.keys(filterParams).every((key) => {
+//       const currentProperty = product.properties.find((property) => property.key === key);
+//       return (
+//         filterParams[key] === currentProperty.value ||
+//         (typeof filterParams[key] === "object" && filterParams[key].min <= currentProperty.value && filterParams[key].max >= currentProperty.value) ||
+//         (Array.isArray(filterParams[key]) && filterParams[key].includes(currentProperty.value))
+//       );
+//     });
+//   };
+// }

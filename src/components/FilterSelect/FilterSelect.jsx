@@ -48,6 +48,7 @@ export default function FilterSelect({ data, title, multi, handleSelect }) {
               ...baseStyles,
               minWidth: "200px",
               maxWidth: "80%",
+              zIndex: 10,
             }),
           }}
           onChange={(newValue) => handleSelect(newValue)}

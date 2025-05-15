@@ -60,8 +60,6 @@ export default function App() {
     if (recipes.length < 0) {
       return;
     }
-    // if (Array.isArray(data)) {}
-    //проверка для select, multi и slider
     const recipesData = data
       .filter((item, i, arr) => arr.indexOf(item) === i)
       .map((item) => {
@@ -97,7 +95,9 @@ export default function App() {
   };
 
   const getRecipesMealType = () => {
-    const recipesMealType = recipes.map((recipe) => recipe.mealType);
+    const recipesMealType = recipes.reduce((acc, recipe) => {
+      return [...acc, ...recipe.mealType];
+    }, []);
 
     const mealType = getRecipesData(recipesMealType);
     return mealType;
@@ -108,6 +108,56 @@ export default function App() {
 
     const cuisine = getRecipesData(recipesCuisine);
     return cuisine;
+  };
+
+  // category: 'rating',
+  // value: {
+  // 	min: 3,
+  // 	max: 5
+  // }
+
+  const getRecipesRanges = () => {
+    // const testMap = recipes.map((recipe) => {
+    //   return {
+    //     rating: recipe.rating,
+    //     cookTimeMinutes: recipe.cookTimeMinutes,
+    //     caloriesPerServing: recipe.caloriesPerServing,
+    //   };
+    // });
+    // const testReduce = testMap.reduce((acc, recipe) => {
+    //   return {
+    //     ...acc,
+    //     cookTimeMinutes: [Math.min(recipe.cookTimeMinutes), Math.max(recipe.cookTimeMinutes)],
+    //   };
+    // }, []);
+    // const test = recipes.reduce((acc, recipe) => {
+    //   return {
+    //     ...acc,
+    //     rating: [recipe.rating],
+    //     cookTimeMinutes: [recipe.cookTimeMinutes],
+    //     caloriesPerServing: [recipe.caloriesPerServing],
+    //   };
+    // }, []);
+    // console.log(test);
+    // const testMap = recipes.map((recipe) => {
+    //   return {
+    //     category: "rating",
+    //     value: recipe.rating,
+    //   };
+    // });
+    // const testReduce = testMap.reduce((acc, el, i, arr) => {
+    //   let newArr = arr.map((el) => el.value);
+    //   return {
+    //     ...acc,
+    //     [el.category]: [Math.min(newArr)],
+    //   };
+    // acc[el.category] = [el.value],
+    // return acc
+    // }, {});
+    // const testReduce = recipes.reduce((acc, recipe) => {
+    // });
+    // console.log(testMap);
+    // console.log(testReduce);
   };
 
   const handleSelected = (selected) => {
@@ -140,6 +190,7 @@ export default function App() {
             mealType={getRecipesMealType()}
             cuisine={getRecipesCuisine()}
             handleSelected={handleSelected}
+            ranges={getRecipesRanges()}
           />
         </div>
         <RecipesList

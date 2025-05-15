@@ -7,10 +7,12 @@ import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FilterSelect from "../FilterSelect/FilterSelect";
 import FilterSlider from "../FilterSlider/FilterSlider";
-// import FilterSlider from "../FilterSlider/FilterSlider";
 
-export default function Filter({ tags, ingredients, difficulty, mealType, cuisine, handleSelected }) {
+export default function Filter({ tags, ingredients, difficulty, mealType, cuisine, ranges, handleSelected }) {
   const [isOpen, setIsOpen] = useState(false);
+  // console.log(tags);
+
+  //
 
   const handleGetSelected = (selected) => {
     handleSelected(selected);
@@ -30,22 +32,14 @@ export default function Filter({ tags, ingredients, difficulty, mealType, cuisin
             <FilterSelect data={ingredients} title="Ingridients" multi={true} handleSelect={handleGetSelected} />
             <FilterSelect data={mealType} title="Meal type" multi={false} handleSelect={handleGetSelected} />
             <FilterSelect data={cuisine} title="Cuisine" multi={false} handleSelect={handleGetSelected} />
-            <FilterSlider title="Rating" />
+            <FilterSlider title="Cooking Time (mins)" min="0" max="130" step="5" />
+            <FilterSlider title="Calories" min="0" max="1500" step="100" />
           </Form>
         </div>
       )}
     </div>
   );
 }
-
-// фильтр:
-// по ингридиентам +
-// по сложности select +
-// по рейтингу slider
-// время готовки slider
-// калории slider
-// mealType select +
-// кухня select +
 
 //компонент фильтра сгенерирует это:
 // input => form => filter

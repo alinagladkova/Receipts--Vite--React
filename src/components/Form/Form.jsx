@@ -6,7 +6,8 @@ export default function Form({ children, preventDefault, method, action }) {
     preventDefault && e.preventDefault();
     console.log("submit", name);
 
-    // const data = new FormData(e.target)
+    const data = new FormData(e.target);
+    console.log(data);
   };
 
   return (

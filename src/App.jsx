@@ -3,6 +3,8 @@ import Header from "./components/Header/Header";
 import FavoriteList from "./components/FavoriteList/FavoriteList";
 import { useEffect, useRef, useState } from "react";
 import Filter from "./components/Filter/Filter";
+import Button from "./components/Button/Button";
+import { useMemo } from "react";
 // import { getRecipesTags } from "./utils/selectorData";
 
 export default function App() {
@@ -62,14 +64,15 @@ export default function App() {
     }
     const recipesData = data
       .filter((item, i, arr) => arr.indexOf(item) === i)
-      .map((item) => {
-        return { value: item, label: item };
+      .map((el, i, arr) => {
+        return typeof el === "number" ? { min: Math.min(...arr), max: Math.max(...arr) } : { value: el, label: el };
       });
 
     return recipesData;
   };
 
   const getRecipesTags = () => {
+    console.log("getRecipesTags");
     const recipesTags = recipes.reduce((acc, recipe) => {
       return [...acc, ...recipe.tags];
     }, []);
@@ -77,6 +80,8 @@ export default function App() {
     const tags = getRecipesData(recipesTags);
     return tags;
   };
+
+  const memoRecipesTags = useMemo(() => getRecipesTags(), [recipes]);
 
   const getRecipesIngredients = () => {
     const recipesIngredients = recipes.reduce((acc, recipe) => {
@@ -87,12 +92,7 @@ export default function App() {
     return ingredients;
   };
 
-  const getRecipesDifficulty = () => {
-    const recipesDifficulty = recipes.map((recipe) => recipe.difficulty);
-
-    const difficulty = getRecipesData(recipesDifficulty);
-    return difficulty;
-  };
+  const memoRecipesIngredients = useMemo(() => getRecipesIngredients(), [recipes]);
 
   const getRecipesMealType = () => {
     const recipesMealType = recipes.reduce((acc, recipe) => {
@@ -103,6 +103,8 @@ export default function App() {
     return mealType;
   };
 
+  const memoRecipesMealType = useMemo(() => getRecipesMealType(), [recipes]);
+
   const getRecipesCuisine = () => {
     const recipesCuisine = recipes.map((recipe) => recipe.cuisine);
 
@@ -110,71 +112,51 @@ export default function App() {
     return cuisine;
   };
 
-  // category: 'rating',
-  // value: {
-  // 	min: 3,
-  // 	max: 5
-  // }
+  const memoRecipesCuisine = useMemo(() => getRecipesCuisine(), [recipes]);
 
-  const getRecipesRanges = () => {
-    // const testMap = recipes.map((recipe) => {
-    //   return {
-    //     rating: recipe.rating,
-    //     cookTimeMinutes: recipe.cookTimeMinutes,
-    //     caloriesPerServing: recipe.caloriesPerServing,
-    //   };
-    // });
-    // const testReduce = testMap.reduce((acc, recipe) => {
-    //   return {
-    //     ...acc,
-    //     cookTimeMinutes: [Math.min(recipe.cookTimeMinutes), Math.max(recipe.cookTimeMinutes)],
-    //   };
-    // }, []);
-    // const test = recipes.reduce((acc, recipe) => {
-    //   return {
-    //     ...acc,
-    //     rating: [recipe.rating],
-    //     cookTimeMinutes: [recipe.cookTimeMinutes],
-    //     caloriesPerServing: [recipe.caloriesPerServing],
-    //   };
-    // }, []);
-    // console.log(test);
-    // const testMap = recipes.map((recipe) => {
-    //   return {
-    //     category: "rating",
-    //     value: recipe.rating,
-    //   };
-    // });
-    // const testReduce = testMap.reduce((acc, el, i, arr) => {
-    //   let newArr = arr.map((el) => el.value);
-    //   return {
-    //     ...acc,
-    //     [el.category]: [Math.min(newArr)],
-    //   };
-    // acc[el.category] = [el.value],
-    // return acc
-    // }, {});
-    // const testReduce = recipes.reduce((acc, recipe) => {
-    // });
-    // console.log(testMap);
-    // console.log(testReduce);
+  const getCookingTimeRange = () => {
+    const recipesTime = recipes.map((recipe) => recipe.cookTimeMinutes);
+    const time = getRecipesData(recipesTime);
+
+    return time.reduce((acc, el) => {
+      return el;
+    }, time[0]);
   };
+
+  const memoRecipesTimeRange = useMemo(() => getCookingTimeRange(), [recipes]);
+
+  const getCaloriesRange = () => {
+    const recipesCalories = recipes.map((recipe) => recipe.caloriesPerServing);
+    const calories = getRecipesData(recipesCalories);
+
+    return calories.reduce((acc, el) => {
+      return el;
+    }, calories[0]);
+  };
+
+  const memoRecipesCaloriesRange = useMemo(() => getCaloriesRange(), [recipes]);
+
+  const getRecipesDifficulty = () => {
+    const recipesDifficulty = recipes.map((recipe) => recipe.difficulty);
+
+    const difficulty = getRecipesData(recipesDifficulty);
+    return difficulty;
+  };
+
+  const memoRecipesDifficulty = useMemo(() => getRecipesDifficulty(), [recipes]);
 
   const handleSelected = (selected) => {
     //сюда должен прийти объект filterParams
     // закинуть в состояние
-    if (selected.length === 0) {
-      return;
-    }
-
-    const selectedItems = selected.map((item) => item.value);
-    console.log(selectedItems);
-
-    const filtered = recipes.filter((recipe) => {
-      return selectedItems.every((item) => recipe.tags.includes(item));
-    });
-
-    setFilteredRecipes(filtered);
+    // if (selected.length === 0) {
+    //   return;
+    // }
+    // const selectedItems = selected.map((item) => item.value);
+    // console.log(selectedItems);
+    // const filtered = recipes.filter((recipe) => {
+    //   return selectedItems.every((item) => recipe.tags.includes(item));
+    // });
+    // setFilteredRecipes(filtered);
   };
 
   return (
@@ -184,13 +166,14 @@ export default function App() {
         <div className="control-panel">
           <FavoriteList favoriteRecipes={favoriteRecipes} handleToFavorite={handleToFavorite} />
           <Filter
-            tags={getRecipesTags()}
-            ingredients={getRecipesIngredients()}
-            difficulty={getRecipesDifficulty()}
-            mealType={getRecipesMealType()}
-            cuisine={getRecipesCuisine()}
+            tags={memoRecipesTags}
+            ingredients={memoRecipesIngredients}
+            difficulty={memoRecipesDifficulty}
+            mealType={memoRecipesMealType}
+            cuisine={memoRecipesCuisine}
+            calories={memoRecipesCaloriesRange}
+            time={memoRecipesTimeRange}
             handleSelected={handleSelected}
-            ranges={getRecipesRanges()}
           />
         </div>
         <RecipesList
@@ -211,17 +194,16 @@ export default function App() {
 
 адаптив
 сделать прогрузку изображения (можно ли передать состояние isLoading ниже или нужно новое?)
-переделать фильтр по тэгам
 отображение ошибок
 самые просматриваемые
 поиск
 control-panel открывать поочередно, а не все сразу
 добавить транзишены
 
-обернуть в форму, переделать выпадающим полотном
 хэндлером из формы получить данные и отфильтровать
-подобавлять разные типы в форму
 вспомнить класс FormData
+добавить тормоз на фильтр и кнопку отфильтровать 
+сделать сортировку
 */
 
 /* ошибка ключа

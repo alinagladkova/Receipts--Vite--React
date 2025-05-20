@@ -1,7 +1,7 @@
 import cn from "classnames";
 import styles from "./input.module.scss";
 
-export default function Input({ name, value, type, placeholder, min, max, hidden, handler = () => {} }) {
+export default function Input({ name, value, type, placeholder, hidden, handler = () => {} }) {
   return (
     <input
       className={cn(styles.input)}
@@ -9,8 +9,6 @@ export default function Input({ name, value, type, placeholder, min, max, hidden
       type={type}
       value={value}
       placeholder={placeholder}
-      min={min}
-      max={max}
       hidden={hidden}
       onChange={(e) => handler(e.target.value)}
     ></input>

@@ -1,24 +1,39 @@
 import cn from "classnames";
 import styles from "./filter.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { VscFilter, VscFilterFilled } from "react-icons/vsc";
 import { IconContext } from "react-icons";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FilterSelect from "../FilterSelect/FilterSelect";
 import FilterSlider from "../FilterSlider/FilterSlider";
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-export default function Filter({ tags, ingredients, difficulty, mealType, cuisine, ranges, handleSelected }) {
+export default function Filter({ tags, ingredients, difficulty, mealType, cuisine, calories, time, handleSelected }) {
   const [isOpen, setIsOpen] = useState(false);
-  // console.log(tags);
-
-  //
+  const [filterParams, setFilterParams] = useState({});
 
   const handleGetSelected = (selected) => {
-    handleSelected(selected);
+    // console.log(selected);
+    // handleSelected(selected);
   };
 
   //обработка ошибок. Проверять типы.
+
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.code === "Escape") {
+        setIsOpen(false); // обработчик клика на Esc
+      }
+    };
+    window.addEventListener("keydown", handleEscapeKey);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscapeKey);
+    };
+  }, [isOpen]);
+  //закрытие на клик вне фильтра
+
   return (
     <div className={cn(styles.filter)}>
       <Button use="stealth" handler={() => setIsOpen((prev) => !prev)}>
@@ -28,12 +43,12 @@ export default function Filter({ tags, ingredients, difficulty, mealType, cuisin
         <div className={cn(styles[`filter__form`])}>
           <Form preventDefault={true} method="POST" action="#" handleGetSelected={handleGetSelected}>
             <FilterSelect data={tags} title="Tags" multi={true} handleSelect={handleGetSelected} />
-            <FilterSelect data={difficulty} title="Difficulty" multi={false} handleSelect={handleGetSelected} />
             <FilterSelect data={ingredients} title="Ingridients" multi={true} handleSelect={handleGetSelected} />
             <FilterSelect data={mealType} title="Meal type" multi={false} handleSelect={handleGetSelected} />
             <FilterSelect data={cuisine} title="Cuisine" multi={false} handleSelect={handleGetSelected} />
-            <FilterSlider title="Cooking Time (mins)" min="0" max="130" step="5" />
-            <FilterSlider title="Calories" min="0" max="1500" step="100" />
+            <FilterSlider title="Cooking Time (mins)" min={time.min} max={time.max} step="1" handleRange={handleGetSelected} />
+            <FilterSlider title="Calories" min={calories.min} max={calories.max} step="10" handleRange={handleGetSelected} />
+            <FilterCheckbox data={difficulty} title="Difficulty" handleCheckbox={handleGetSelected} />
           </Form>
         </div>
       )}
@@ -57,16 +72,3 @@ export default function Filter({ tags, ingredients, difficulty, mealType, cuisin
 //     },
 //     colors: ['black', 'white']
 //   };
-
-// _getFilterValue(filterParams) {
-//   return (product) => {
-//     return Object.keys(filterParams).every((key) => {
-//       const currentProperty = product.properties.find((property) => property.key === key);
-//       return (
-//         filterParams[key] === currentProperty.value ||
-//         (typeof filterParams[key] === "object" && filterParams[key].min <= currentProperty.value && filterParams[key].max >= currentProperty.value) ||
-//         (Array.isArray(filterParams[key]) && filterParams[key].includes(currentProperty.value))
-//       );
-//     });
-//   };
-// }

@@ -1,5 +1,4 @@
 import cn from "classnames";
-
 import { useState } from "react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
@@ -23,11 +22,10 @@ export default function FilterSlider({ title, min, max, step, handleRange }) {
           step={step}
           onInput={(val) => {
             setValue(val);
+            handleRange(val[0]);
           }}
         />
       </div>
     </div>
   );
 }
-
-//difficulty переделать в чекбокс

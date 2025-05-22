@@ -3,9 +3,8 @@ import Header from "./components/Header/Header";
 import FavoriteList from "./components/FavoriteList/FavoriteList";
 import { useEffect, useRef, useState } from "react";
 import Filter from "./components/Filter/Filter";
-import Button from "./components/Button/Button";
 import { useMemo } from "react";
-// import { getRecipesTags } from "./utils/selectorData";
+import RecipesProperties from "./utils/RecipesProperties";
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -58,92 +57,19 @@ export default function App() {
       : setFavoriteRecipes((prev) => prev.filter((recipe) => recipe !== findedRecipe));
   };
 
-  const getRecipesData = (data) => {
-    if (recipes.length < 0) {
-      return;
-    }
-    const recipesData = data
-      .filter((item, i, arr) => arr.indexOf(item) === i)
-      .map((el, i, arr) => {
-        return typeof el === "number" ? { min: Math.min(...arr), max: Math.max(...arr) } : { value: el, label: el };
-      });
+  const memoRecipesTags = useMemo(() => RecipesProperties.getProperties(recipes, "tags"), [recipes]);
 
-    return recipesData;
-  };
+  const memoRecipesIngredients = useMemo(() => RecipesProperties.getProperties(recipes, "ingredients"), [recipes]);
 
-  const getRecipesTags = () => {
-    console.log("getRecipesTags");
-    const recipesTags = recipes.reduce((acc, recipe) => {
-      return [...acc, ...recipe.tags];
-    }, []);
+  const memoRecipesMealType = useMemo(() => RecipesProperties.getProperties(recipes, "mealType"), [recipes]);
 
-    const tags = getRecipesData(recipesTags);
-    return tags;
-  };
+  const memoRecipesCuisine = useMemo(() => RecipesProperties.getProperties(recipes, "cuisine"), [recipes]);
 
-  const memoRecipesTags = useMemo(() => getRecipesTags(), [recipes]);
+  const memoRecipesTimeRange = useMemo(() => RecipesProperties.getProperties(recipes, "cookTimeMinutes"), [recipes]);
 
-  const getRecipesIngredients = () => {
-    const recipesIngredients = recipes.reduce((acc, recipe) => {
-      return [...acc, ...recipe.ingredients];
-    }, []);
+  const memoRecipesCaloriesRange = useMemo(() => RecipesProperties.getProperties(recipes, "caloriesPerServing"), [recipes]);
 
-    const ingredients = getRecipesData(recipesIngredients);
-    return ingredients;
-  };
-
-  const memoRecipesIngredients = useMemo(() => getRecipesIngredients(), [recipes]);
-
-  const getRecipesMealType = () => {
-    const recipesMealType = recipes.reduce((acc, recipe) => {
-      return [...acc, ...recipe.mealType];
-    }, []);
-
-    const mealType = getRecipesData(recipesMealType);
-    return mealType;
-  };
-
-  const memoRecipesMealType = useMemo(() => getRecipesMealType(), [recipes]);
-
-  const getRecipesCuisine = () => {
-    const recipesCuisine = recipes.map((recipe) => recipe.cuisine);
-
-    const cuisine = getRecipesData(recipesCuisine);
-    return cuisine;
-  };
-
-  const memoRecipesCuisine = useMemo(() => getRecipesCuisine(), [recipes]);
-
-  const getCookingTimeRange = () => {
-    const recipesTime = recipes.map((recipe) => recipe.cookTimeMinutes);
-    const time = getRecipesData(recipesTime);
-
-    return time.reduce((acc, el) => {
-      return el;
-    }, time[0]);
-  };
-
-  const memoRecipesTimeRange = useMemo(() => getCookingTimeRange(), [recipes]);
-
-  const getCaloriesRange = () => {
-    const recipesCalories = recipes.map((recipe) => recipe.caloriesPerServing);
-    const calories = getRecipesData(recipesCalories);
-
-    return calories.reduce((acc, el) => {
-      return el;
-    }, calories[0]);
-  };
-
-  const memoRecipesCaloriesRange = useMemo(() => getCaloriesRange(), [recipes]);
-
-  const getRecipesDifficulty = () => {
-    const recipesDifficulty = recipes.map((recipe) => recipe.difficulty);
-
-    const difficulty = getRecipesData(recipesDifficulty);
-    return difficulty;
-  };
-
-  const memoRecipesDifficulty = useMemo(() => getRecipesDifficulty(), [recipes]);
+  const memoRecipesDifficulty = useMemo(() => RecipesProperties.getProperties(recipes, "difficulty"), [recipes]);
 
   const handleSelected = (selected) => {
     //сюда должен прийти объект filterParams

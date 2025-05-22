@@ -9,7 +9,7 @@ import FilterSelect from "../FilterSelect/FilterSelect";
 import FilterSlider from "../FilterSlider/FilterSlider";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-export default function Filter({ tags, ingredients, difficulty, mealType, cuisine, calories, time, handleSelected }) {
+export default function Filter({ tags, ingredients, mealType, cuisine, calories, time, difficulty, handleSelected }) {
   const [isOpen, setIsOpen] = useState(false);
   const [filterParams, setFilterParams] = useState({});
 
@@ -46,8 +46,8 @@ export default function Filter({ tags, ingredients, difficulty, mealType, cuisin
             <FilterSelect data={ingredients} title="Ingridients" multi={true} handleSelect={handleGetSelected} />
             <FilterSelect data={mealType} title="Meal type" multi={false} handleSelect={handleGetSelected} />
             <FilterSelect data={cuisine} title="Cuisine" multi={false} handleSelect={handleGetSelected} />
-            <FilterSlider title="Cooking Time (mins)" min={time.min} max={time.max} step="1" handleRange={handleGetSelected} />
-            <FilterSlider title="Calories" min={calories.min} max={calories.max} step="10" handleRange={handleGetSelected} />
+            <FilterSlider title="Cooking Time (mins)" min={time[0].min} max={time[0].max} step="1" handleRange={handleGetSelected} />
+            <FilterSlider title="Calories" min={calories[0].min} max={calories[0].max} step="10" handleRange={handleGetSelected} />
             <FilterCheckbox data={difficulty} title="Difficulty" handleCheckbox={handleGetSelected} />
           </Form>
         </div>

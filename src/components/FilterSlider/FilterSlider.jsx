@@ -12,8 +12,8 @@ export default function FilterSlider({ title, min, max, step, handleRange }) {
       <div className={cn(styles[`filter-slider__title`])}>{title}</div>
       <div className={cn(styles[`filter-slider__wrapper`])}>
         <div className={cn(styles[`filter-slider__values`])}>
-          <div className={cn(styles[`filter-slider__min`])}>{min}</div>
-          <div className={cn(styles[`filter-slider__max`])}>{value[0]}</div>
+          <div className={cn(styles[`filter-slider__min`])}>{min} mins</div>
+          <div className={cn(styles[`filter-slider__max`])}>{value[0]} mins</div>
         </div>
         <RangeSlider
           value={value}
@@ -22,7 +22,7 @@ export default function FilterSlider({ title, min, max, step, handleRange }) {
           step={step}
           onInput={(val) => {
             setValue(val);
-            handleRange(val[0]);
+            handleRange([min, val[0]], title);
           }}
         />
       </div>

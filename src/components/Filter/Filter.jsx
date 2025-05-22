@@ -9,16 +9,20 @@ import FilterSelect from "../FilterSelect/FilterSelect";
 import FilterSlider from "../FilterSlider/FilterSlider";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-export default function Filter({ tags, ingredients, mealType, cuisine, calories, time, difficulty, handleSelected }) {
+export default function Filter({ tags, ingredients, mealType, cuisine, calories, time, difficulty, handleClose, handleSelected }) {
   const [isOpen, setIsOpen] = useState(false);
   const [filterParams, setFilterParams] = useState({});
 
-  const handleGetSelected = (selected) => {
-    // console.log(selected);
-    // handleSelected(selected);
-  };
+  const handleGetSelected = (selected, category) => {
+    const params = selected.reduce((acc, el) => {
+      return {
+        ...acc,
+        [category]: selected.map((el, arr) => (typeof el === "object" ? el.value : arr)),
+      };
+    }, {});
 
-  //обработка ошибок. Проверять типы.
+    setFilterParams(Object.assign(filterParams, params));
+  };
 
   useEffect(() => {
     const handleEscapeKey = (event) => {
@@ -32,7 +36,18 @@ export default function Filter({ tags, ingredients, mealType, cuisine, calories,
       window.removeEventListener("keydown", handleEscapeKey);
     };
   }, [isOpen]);
-  //закрытие на клик вне фильтра
+
+  useEffect(() => {
+    handleSelected(filterParams);
+  }, [filterParams]);
+
+  const handleCloseOuterClick = (event) => {
+    // console.log(event.target);
+    // console.log(event.currentTarget);
+    // if (event.target === event.currentTarget) {
+    //   handleClose(); // Закрываем модальное окно, если кликнули вне обёртки
+    // }
+  };
 
   return (
     <div className={cn(styles.filter)}>
@@ -40,13 +55,13 @@ export default function Filter({ tags, ingredients, mealType, cuisine, calories,
         <IconContext.Provider value={{ color: "rgb(67, 69, 83)" }}>{isOpen ? <VscFilterFilled /> : <VscFilter />}</IconContext.Provider>
       </Button>
       {isOpen && (
-        <div className={cn(styles[`filter__form`])}>
+        <div className={cn(styles[`filter__form`])} onClick={handleCloseOuterClick}>
           <Form preventDefault={true} method="POST" action="#" handleGetSelected={handleGetSelected}>
             <FilterSelect data={tags} title="Tags" multi={true} handleSelect={handleGetSelected} />
             <FilterSelect data={ingredients} title="Ingridients" multi={true} handleSelect={handleGetSelected} />
             <FilterSelect data={mealType} title="Meal type" multi={false} handleSelect={handleGetSelected} />
             <FilterSelect data={cuisine} title="Cuisine" multi={false} handleSelect={handleGetSelected} />
-            <FilterSlider title="Cooking Time (mins)" min={time[0].min} max={time[0].max} step="1" handleRange={handleGetSelected} />
+            <FilterSlider title="Cooking Time" min={time[0].min} max={time[0].max} step="1" handleRange={handleGetSelected} />
             <FilterSlider title="Calories" min={calories[0].min} max={calories[0].max} step="10" handleRange={handleGetSelected} />
             <FilterCheckbox data={difficulty} title="Difficulty" handleCheckbox={handleGetSelected} />
           </Form>

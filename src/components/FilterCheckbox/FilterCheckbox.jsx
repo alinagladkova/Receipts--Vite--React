@@ -8,7 +8,7 @@ export default function FilterCheckbox({ title, data, handleCheckbox }) {
   const [isChecked, setIsChecked] = useState(data);
 
   useEffect(() => {
-    handleCheckbox(isChecked);
+    handleCheckbox(isChecked, "difficulty");
   }, [isChecked]);
 
   return (

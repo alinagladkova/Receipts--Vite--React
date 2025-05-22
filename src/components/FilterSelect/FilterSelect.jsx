@@ -50,7 +50,7 @@ export default function FilterSelect({ data, title, multi, handleSelect }) {
               zIndex: 10,
             }),
           }}
-          onChange={(newValue) => handleSelect(newValue)}
+          onChange={(newValue) => (!Array.isArray(newValue) ? handleSelect([newValue], title) : handleSelect(newValue, title))}
         />
       </div>
     </div>

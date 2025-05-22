@@ -10,6 +10,7 @@ export default function App() {
   const [recipes, setRecipes] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState(null);
+  const [isActiveFilter, setIsActiveFilter] = useState(false);
   const [skip, setSkip] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -18,6 +19,10 @@ export default function App() {
   const handleSetSkip = () => {
     if (!hasMore || isLoading) return;
     setSkip((prev) => prev + 8);
+  };
+
+  const handleCloseFilter = () => {
+    setIsActiveFilter(false);
   };
 
   const fetchRecipes = async () => {
@@ -71,7 +76,20 @@ export default function App() {
 
   const memoRecipesDifficulty = useMemo(() => RecipesProperties.getProperties(recipes, "difficulty"), [recipes]);
 
-  const handleSelected = (selected) => {
+  const getFilterValue = (filterParams) => {
+    console.log(filterParams);
+
+    // setFilteredRecipes();
+    // return (recipe) => {
+    //   return Object.keys(filterParams).every((key) => {
+    //     const currentProperty = product.properties.find((property) => property.key === key);
+    //     return (
+    //       filterParams[key] === currentProperty.value ||
+    //       (typeof filterParams[key] === "object" && filterParams[key].min <= currentProperty.value && filterParams[key].max >= currentProperty.value) ||
+    //       (Array.isArray(filterParams[key]) && filterParams[key].includes(currentProperty.value))
+    //     );
+    //   });
+    // };
     //сюда должен прийти объект filterParams
     // закинуть в состояние
     // if (selected.length === 0) {
@@ -99,8 +117,10 @@ export default function App() {
             cuisine={memoRecipesCuisine}
             calories={memoRecipesCaloriesRange}
             time={memoRecipesTimeRange}
-            handleSelected={handleSelected}
+            handleClose={handleCloseFilter}
+            handleSelected={getFilterValue}
           />
+          {/* {console.log(isActiveFilter)} */}
         </div>
         <RecipesList
           recipes={recipes}
@@ -128,8 +148,9 @@ control-panel открывать поочередно, а не все сразу
 
 хэндлером из формы получить данные и отфильтровать
 вспомнить класс FormData
-добавить тормоз на фильтр и кнопку отфильтровать 
+закрытие фильтра на клик вне
 сделать сортировку
+в фильтре кнопка очистить все
 */
 
 /* ошибка ключа
@@ -153,24 +174,3 @@ setRecipes(prevRecipes => {
   return [...prevRecipes, ...newRecipes];
 });
 */
-
-//поменять reduce на map +
-// дополнить фильтр
-
-// if (recipes.length > 0) {
-//   const recipesTags = recipes
-//     .reduce((acc, recipe) => {
-//       return [...acc, ...recipe.tags];
-//     }, [])
-//     .filter((tag, i, arr) => arr.indexOf(tag) === i)
-//     .map((tag) => {
-//       return { value: tag, label: tag };
-//     });
-//   // .reduce((acc, tag) => {
-//   //   acc.push({ value: tag, label: tag });
-//   //   return acc;
-//   // }, []);
-//   // const tags = recipesTags.filter((tag, i, arr) => arr.indexOf(tag) === i);
-//   // return tags;
-//   return recipesTags;
-// }
